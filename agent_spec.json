@@ -1,0 +1,115 @@
+{
+  "agent": {
+    "id": "voice_billing_ai_v1",
+    "name": "VoiceBillingAI",
+    "type": "agentic_ai",
+    "description": "Offline voice-powered billing assistant for small retailers in India",
+    
+    "goal": [
+      "Listen to shopkeeper voice input",
+      "Generate accurate GST-compliant invoice",
+      "Enable instant UPI payment",
+      "Store transaction data locally"
+    ],
+    
+    "languages_supported": {
+      "speech_input": ["hi", "en", "hi-en"],
+      "output": ["hi", "en", "hi-en"]
+    },
+    
+    "input": {
+      "mode": "speech",
+      "engine": "vosk",
+      "offline": true,
+      "supported_commands": [
+        "add item",
+        "remove item",
+        "generate bill",
+        "customer mobile number",
+        "confirm payment"
+      ]
+    },
+    
+    "nlp_processing": {
+      "method": "rule_based + lightweight_model",
+      "extracts": ["item_name", "quantity", "unit_price", "category"],
+      "examples": [
+        "दो किलो चीनी 40 रुपए किलो",
+        "Add 1 kg sugar at 30 rupees"
+      ]
+    },
+    
+    "billing_engine": {
+      "currency": "INR",
+      "gst": {
+        "enabled": true,
+        "rates_by_category": {
+          "food_items": 0.05,
+          "general_goods": 0.18,
+          "luxury_items": 0.28
+        },
+        "tax_type": "CGST_SGST"
+      },
+      "invoice_fields": [
+        "invoice_id",
+        "date",
+        "time",
+        "customer_mobile",
+        "items",
+        "subtotal",
+        "gst_amount",
+        "grand_total"
+      ]
+    },
+    
+    "payment": {
+      "method": "upi",
+      "mode": "qr_code",
+      "upi_fields": ["vpa", "merchant_name", "amount", "transaction_note"],
+      "auto_amount_fill": true
+    },
+    
+    "storage": {
+      "type": "local_database",
+      "engine": "sqlite",
+      "offline": true,
+      "tables": ["invoices", "invoice_items", "customers", "payments"]
+    },
+    
+    "platform": {
+      "android_app": {
+        "enabled": true,
+        "min_sdk": 24,
+        "permissions": ["RECORD_AUDIO", "READ_CONTACTS", "CAMERA", "STORAGE"]
+      },
+      "whatsapp_integration": {
+        "enabled": false,
+        "future_scope": true
+      }
+    },
+    
+    "feedback": {
+      "voice_confirmation": true,
+      "text_to_speech": true,
+      "examples": [
+        "2 किलो चीनी जोड़ी गई",
+        "Total amount is 245 rupees"
+      ]
+    },
+    
+    "offline_support": {
+      "billing": true,
+      "speech_to_text": true,
+      "database": true,
+      "upi_payment": false
+    },
+    
+    "advanced_features": [
+      "inventory_management",
+      "customer_profiles",
+      "loyalty_points",
+      "sales_analytics",
+      "custom_invoice_templates"
+    ]
+  }
+}

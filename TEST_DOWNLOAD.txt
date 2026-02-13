@@ -1,0 +1,15 @@
+# Test the download button feature
+# 1. Start server: run.bat
+# 2. Open browser: http://localhost:8000
+# 3. Say: "2 kg rice at 60, 1 kg sugar at 42"
+# 4. Click "Confirm" button
+# 5. Download button should appear
+# 6. Click download button to get PDF
+
+print("Test Steps:")
+print("1. Run: run.bat")
+print("2. Open: http://localhost:8000")
+print("3. Type: 2 kg rice at 60, 1 kg sugar at 42")
+print("4. Click: Confirm")
+print("5. Click: Download Invoice PDF button")
+print("6. PDF should open/download")
